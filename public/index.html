@@ -52,6 +52,40 @@
       margin-top: 0;
     }
 
+    .avatars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .avatar {
+      border: 3px solid transparent;
+      border-radius: 15px;
+      padding: 6px;
+      background: #f5f5f5;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .avatar.selected {
+      border-color: #1d4d3a;
+      background: #eef5f0;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .avatar-name {
+      font-weight: bold;
+      margin: 8px 0 3px;
+    }
+
     label {
       display: block;
       margin-top: 15px;
@@ -68,18 +102,6 @@
       font-size: 16px;
     }
 
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 12px;
-      background: #1d4d3a;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-    }
-
     .starting-money {
       margin-top: 20px;
       padding: 15px;
@@ -93,76 +115,126 @@
       font-weight: bold;
       color: #1d4d3a;
     }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 12px;
+      background: #1d4d3a;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
 
-  <header>
-    <h1>ILORIN LIFE</h1>
-    <p>Your life. Your hustle. Your Ilorin.</p>
-  </header>
+<header>
+  <h1>ILORIN LIFE</h1>
+  <p>Your life. Your hustle. Your Ilorin.</p>
+</header>
 
-  <div class="container">
+<div class="container">
 
-    <div class="card">
-      <h2>Create Your Character 👤</h2>
+  <div class="card">
+    <h2>Create Your Character 👤</h2>
+    <p>Choose your character to begin.</p>
 
-      <label>What is your name?</label>
-      <input type="text" id="name" placeholder="Enter your name">
+    <div class="avatars">
 
-      <label>Age</label>
-      <input type="number" id="age" placeholder="18" min="18" max="80">
-
-      <label>Gender</label>
-      <select id="gender">
-        <option value="">Choose gender</option>
-        <option>Male</option>
-        <option>Female</option>
-      </select>
-
-      <label>Where do you want to start?</label>
-      <select id="location">
-        <option value="">Choose location</option>
-        <option>Tanke</option>
-        <option>GRA</option>
-        <option>Oke-Odo</option>
-        <option>Oja-Oba</option>
-        <option>Fate</option>
-        <option>Asa-Dam</option>
-      </select>
-
-      <div class="starting-money">
-        <div>Starting money</div>
-        <div class="money">₦100,000</div>
+      <div class="avatar selected" onclick="selectAvatar(this, 'Male 1')">
+        <img src="/avatars/male-1.png" alt="Male 1">
+        <div class="avatar-name">Male 1</div>
       </div>
 
-      <button onclick="startGame()">Enter Ilorin Life 🚀</button>
+      <div class="avatar" onclick="selectAvatar(this, 'Male 2')">
+        <img src="/avatars/male-2.png" alt="Male 2">
+        <div class="avatar-name">Male 2</div>
+      </div>
+
+      <div class="avatar" onclick="selectAvatar(this, 'Female 1')">
+        <img src="/avatars/female-1.png" alt="Female 1">
+        <div class="avatar-name">Female 1</div>
+      </div>
+
+      <div class="avatar" onclick="selectAvatar(this, 'Female 2')">
+        <img src="/avatars/female-2.png" alt="Female 2">
+        <div class="avatar-name">Female 2</div>
+      </div>
+
     </div>
 
+    <label>What is your name?</label>
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <label>Age</label>
+    <input type="number" id="age" placeholder="18" min="18" max="80">
+
+    <label>Gender</label>
+    <select id="gender">
+      <option value="">Choose gender</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+
+    <label>Where do you want to start?</label>
+    <select id="location">
+      <option value="">Choose location</option>
+      <option>Tanke</option>
+      <option>GRA</option>
+      <option>Oke-Odo</option>
+      <option>Oja-Oba</option>
+      <option>Fate</option>
+      <option>Asa-Dam</option>
+    </select>
+
+    <div class="starting-money">
+      <div>Starting money</div>
+      <div class="money">₦100,000</div>
+    </div>
+
+    <button onclick="startGame()">Enter Ilorin Life 🚀</button>
   </div>
 
-  <script>
-    function startGame() {
-      const name = document.getElementById("name").value;
-      const age = document.getElementById("age").value;
-      const gender = document.getElementById("gender").value;
-      const location = document.getElementById("location").value;
+</div>
 
-      if (!name || !age || !gender || !location) {
-        alert("Please complete your character details.");
-        return;
-      }
+<script>
+  let selectedAvatar = "Male 1";
 
-      alert(
-        "Welcome to Ilorin Life, " +
-        name +
-        "! You are starting in " +
-        location +
-        " with ₦100,000."
-      );
+  function selectAvatar(element, avatar) {
+    document.querySelectorAll(".avatar").forEach(function(item) {
+      item.classList.remove("selected");
+    });
+
+    element.classList.add("selected");
+    selectedAvatar = avatar;
+  }
+
+  function startGame() {
+    const name = document.getElementById("name").value;
+    const age = document.getElementById("age").value;
+    const gender = document.getElementById("gender").value;
+    const location = document.getElementById("location").value;
+
+    if (!name || !age || !gender || !location) {
+      alert("Please complete your character details.");
+      return;
     }
-  </script>
+
+    alert(
+      "Welcome to Ilorin Life, " +
+      name +
+      "! You selected " +
+      selectedAvatar +
+      " and will start in " +
+      location +
+      " with ₦100,000."
+    );
+  }
+</script>
 
 </body>
 </html>
